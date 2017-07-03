@@ -22,4 +22,29 @@ public class BoardManager : MonoBehaviour
 		}
 	}
 
+    public int columns = 5;
+    public int rows = 5;
+    public GameObject[] floorTiles;
+
+    private Transform boardHolder;
+    private Dictionary<Vector2, Vector2> gridPositions = new Dictionary<Vector2, Vector2>();
+
+    public void BoardSetup()
+    {
+        boardHolder = new GameObject("Board").transform;
+
+        for (int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                gridPositions.Add(new Vector2(x, y), new Vector2(x, y));
+
+                GameObject toInstantiate = floorTiles[Random.Range(0, floorTiles.Length)];
+                GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+
+                instance.transform.SetParent(boardHolder);
+            }
+        }
+    }
+
 }
